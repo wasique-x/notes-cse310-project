@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% block title %}
+    About
+{% endblock title %}
+{% block content %}
+    <div style="margin-left: 20%; margin-right: 20%;">
+        <h1 style="font-size: 40px;">About</h1>
+        </br>
+        <p>Notes is a minimal app written in Django that is intended for taking takes. Notes implements CRUD functionality of Notes along with multi User interactions.</p>
+        </br>
+        <h1 style="font-size:20px">Features</h1>
+        <ul style="margin-left: 2%;">
+            <p>Users can View and Select their own Notes.</p>
+            <p>Users can Create new notes having Title and Body.</p>
+            <p>Users can Modify, Trash, Archive and Delete existing Notes.</p>
+            <p style="margin-left: 2%;">Additionally, Trashed Notes can be Untrashed and Archived Notes can be Unarchive.</p>
+            <p>Users can Register, Login and Logout.</p>
+            <p>Multiple Users can simultaneously access the App</p>
+        </ul>
+    </div>
+{% endblock content %}

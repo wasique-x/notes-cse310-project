@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+{% block title %}
+    Notes
+{% endblock title %}
+{% block content %}
+    <div class="columns">
+        <div class="column is-one-quarter">
+            <!-- Left Side-->
+            <div class="block">
+                <a href="{% url 'edit_note' %}?note_id=0" class="button">New note</a>
+                <a href="{% url 'view_trash' %}" class="button">View Trash</a>
+                <a href="{% url 'view_archive' %}" class="button">View Archive</a>
+            </div>
+            <aside class="menu">
+                <p class="menu-label">Notes</p>
+                <ul class="menu-list">
+                    {% for note in notes %}
+                        {% if note.is_trashed == False and note.is_archived == False %}
+                            <li>
+                                <a href="{% url 'edit_note' %}?note_id={{ note.id }}">{{ note.title }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </aside>
+        </div>
+        <div class="column">
+            <div class="box">
+                <!-- Right -->
+                <form method="post" action="{% url 'edit_note' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="note_id" value="{{ note_id }}">
+                    <div class="field">
+                        <label class="label">
+                            Title
+                            {% if note %}
+                                <span class="has-text-grey-light">
+                                    Created at: {{ note.created_at|date:"m/d Y" }} /
+                                    Modified at: {{ note.modified_at|date:"m/d Y" }}
+                                </span>
+                            {% endif %}
+                        </label>
+                        <div class="control">
+                            <input type="text"
+                                   class="input"
+                                   name="title"
+                                   placeholder="Title"
+                                   {% if note %} value="{{ note.title }}"{% endif %}>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Body</label>
+                        <div class="control">
+                            <textarea type="textarea" class="textarea" name="body" placeholder="Body">{% if note %}{{note.body}}{% endif %}</textarea>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary">Save</button>
+                        </div>
+                        {% if note %}
+                            <!-- show if there is a note -->
+                            <div class="control">
+                                <a href="{% url 'archive_note' note.id %}" class="button is-info">Archive</a>
+                            </div>
+                            <div class="control">
+                                <a href="{% url 'trash_note' note.id %}" class="button is-danger">Trash</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

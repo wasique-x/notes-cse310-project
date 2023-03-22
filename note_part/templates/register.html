@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% block title %}
+    Register Account
+{% endblock title %}
+{% block content %}
+    <div style="margin-left: 20%; margin-right: 20%;">
+        {% if request.user.is_authenticated %}
+            <p>You are already logged in</p>
+            <a href="{% url 'login' %}">Return</a>
+        {% else %}
+            <h1 style="font-size: 40px;">Register Account</h1>
+        </br>
+        <form method="POST"">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Username: {{ form.username }}</label>
+            </div>
+            <div class="field">
+                <label class="label">Password:  {{ form.password1 }}</label>
+            </div>
+            <div class="field">
+                <label class="label">Confirm Password:  {{ form.password2 }}</label>
+            </div>
+            <input class="button" type="submit" value="Register">
+        </form>
+    </br>
+    <a class="button is-info" href="{% url 'login' %}">Login instead</a>
+    {% endif %}
+    </div>
+{% endblock content %}
